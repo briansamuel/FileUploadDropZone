@@ -8,5 +8,17 @@
         }
     ],
     "minimum-stability": "dev",
-    "require": {}
+    "require": {},
+    "extra": {
+        "laravel": {
+            "providers": [
+                "vanvu\\fileuploaddropzone\\ServiceProvider"
+            ]
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "VanVu\\FileUploadDropZone\\": "src/"
+        }
+    }
 }
