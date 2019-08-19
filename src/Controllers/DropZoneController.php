@@ -38,7 +38,8 @@ class DropZoneController extends Controller
         $upload_success = $image->move(public_path('images'),$imageName);
         
         if ($upload_success) {
-            return response()->json($upload_success, 200);
+            $url = url('images/'.$imageName);
+            return response()->json($url, 200);
         }
         // Else, return error 400
         else {

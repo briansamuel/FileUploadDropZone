@@ -1,4 +1,6 @@
-<link href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.4.0/basic.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.css" rel="stylesheet" type="text/css" />
 <style type="text/css">
     .dropzone {
         border:2px dashed #999999;
@@ -31,12 +33,13 @@
           </div>
         </div>
         <div class="card-body">
-          <form action="{{ route('multifileupload') }}" enctype="multipart/form-data" class="dropzone" id="fileupload" method="POST">
+          <form action="{{ route('multifileupload') }}" enctype="multipart/form-data" class="dropzone needsclick dz-clickable" id="fileupload" method="POST">
             @csrf
             <div class="fallback">
               <input name="file" type="files" multiple accept="image/jpeg, image/png, image/jpg" />
             </div>
           </form>
+          <button id="uploadfiles" type="button" class="btn btn-primary">Upload File</button>
         </div>
       </div>
     </div>
@@ -46,7 +49,7 @@
   src="https://code.jquery.com/jquery-2.2.4.min.js"
   integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
   crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.4.0/dropzone.js"></script>
+<script src="https://www.dropzonejs.com/js/dropzone.js?v=1533562669"></script>
 <script type="text/javascript">
   Dropzone.options.fileupload = {
     accept: function (file, done) {
@@ -61,9 +64,13 @@
 Dropzone.options.fileupload = {
   acceptedFiles: "image/jpeg, image/png, image/jpg"
 }
+Dropzone.options.myDropzone = {
+  autoProcessQueue: false,
 
+}
 if (typeof Dropzone != 'undefined') {
   Dropzone.autoDiscover = false;
+
 }
 
 ;
@@ -74,38 +81,69 @@ if (typeof Dropzone != 'undefined') {
     // Dropzone Example
     if (typeof Dropzone != 'undefined') {
       if ($("#fileupload").length) {
-        var dz = new Dropzone("#fileupload"),
-          dze_info = $("#dze_info"),
-          status = {
-            uploaded: 0,
-            errors: 0
-          };
+        var dz = new Dropzone("#fileupload", { 
+         autoProcessQueue: false,
+         addRemoveLinks: true,
+         previewsContainer: ".dropzone",
+         parallelUploads: 10 // Number of files process at a time (default 2)
+        });
         var $f = $('<tr><td class="name"></td><td class="size"></td><td class="type"></td><td class="status"></td></tr>');
+        $('#uploadfiles').click(function(){
+           dz.processQueue();
+        });
         dz.on("success", function (file, responseText) {
 
-            console.log(file);
-            var _$f = $f.clone();
+            console.log('success');
+            console.log(responseText);
+            // console.log(file);
+            // var _$f = $f.clone();
 
-            _$f.addClass('success');
+            // _$f.addClass('success');
 
-            _$f.find('.name').html(file.name);
-            if (file.size < 1024) {
-              _$f.find('.size').html(parseInt(file.size) + ' KB');
-            } else {
-              _$f.find('.size').html(parseInt(file.size / 1024, 10) + ' KB');
-            }
-            _$f.find('.type').html(file.type);
-            _$f.find('.status').html('Uploaded <i class="entypo-check"></i>');
+            // _$f.find('.name').html(file.name);
+            // if (file.size < 1024) {
+            //   _$f.find('.size').html(parseInt(file.size) + ' KB');
+            // } else {
+            //   _$f.find('.size').html(parseInt(file.size / 1024, 10) + ' KB');
+            // }
+            // _$f.find('.type').html(file.type);
+            // _$f.find('.status').html('Uploaded <i class="entypo-check"></i>');
 
-            dze_info.find('tbody').append(_$f);
+            // dze_info.find('tbody').append(_$f);
 
-            status.uploaded++;
+            // status.uploaded++;
 
-            dze_info.find('tfoot td').html('<span class="label label-success">' + status.uploaded + ' uploaded</span> <span class="label label-danger">' + status.errors + ' not uploaded</span>');
+            // dze_info.find('tfoot td').html('<span class="label label-success">' + status.uploaded + ' uploaded</span> <span class="label label-danger">' + status.errors + ' not uploaded</span>');
 
-            toastr.success('Your File Uploaded Successfully!!', 'Success Alert', {
-              timeOut: 50000000
-            });
+            // toastr.success('Your File Uploaded Successfully!!', 'Success Alert', {
+            //   timeOut: 50000000
+            // });
+
+          }).on("complete", function (file, responseText) {
+            console.log('complete');
+            console.log(responseText);
+            // var _$f = $f.clone();
+
+            // _$f.addClass('success');
+
+            // _$f.find('.name').html(file.name);
+            // if (file.size < 1024) {
+            //   _$f.find('.size').html(parseInt(file.size) + ' KB');
+            // } else {
+            //   _$f.find('.size').html(parseInt(file.size / 1024, 10) + ' KB');
+            // }
+            // _$f.find('.type').html(file.type);
+            // _$f.find('.status').html('Uploaded <i class="entypo-check"></i>');
+
+            // dze_info.find('tbody').append(_$f);
+
+            // status.uploaded++;
+
+            // dze_info.find('tfoot td').html('<span class="label label-success">' + status.uploaded + ' uploaded</span> <span class="label label-danger">' + status.errors + ' not uploaded</span>');
+
+            // toastr.success('Your File Uploaded Successfully!!', 'Success Alert', {
+            //   timeOut: 50000000
+            // });
 
           })
           .on('error', function (file) {
@@ -126,9 +164,9 @@ if (typeof Dropzone != 'undefined') {
 
             dze_info.find('tfoot td').html('<span class="label label-success">' + status.uploaded + ' uploaded</span> <span class="label label-danger">' + status.errors + ' not uploaded</span>');
 
-            toastr.error('Your File Uploaded Not Successfully!!', 'Error Alert', {
-              timeOut: 5000
-            });
+            // toastr.error('Your File Uploaded Not Successfully!!', 'Error Alert', {
+            //   timeOut: 5000
+            // });
           });
       }
     }
