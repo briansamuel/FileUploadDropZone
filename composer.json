@@ -16,7 +16,7 @@
         },
         "laravel": {
             "providers": [
-                "Vanvu\\FileUploadDropZone\\ServiceProvider"
+                "VanVu\\FileUploadDropZone\\ServiceProvider"
             ]
         }
     },
