@@ -1,0 +1,12 @@
+{
+    "name": "vanvu/fileuploaddropzone",
+    "description": "A package manage and upload file with dropzone",
+    "authors": [
+        {
+            "name": "Dinh Van Vu",
+            "email": "dinhvanvu94@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}
