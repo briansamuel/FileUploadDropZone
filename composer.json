@@ -1,6 +1,7 @@
 {
     "name": "vanvu/fileuploaddropzone",
     "description": "A package manage and upload file with dropzone",
+    "license": "MIT",
     "authors": [
         {
             "name": "Dinh Van Vu",
@@ -10,15 +11,18 @@
     "minimum-stability": "dev",
     "require": {},
     "extra": {
+        "branch-alias": {
+            "dev-master": "0.8-dev"
+        },
         "laravel": {
             "providers": [
-                "vanvu\\fileuploaddropzone\\ServiceProvider"
+                "Vanvu\\FileUploadDropZone\\ServiceProvider"
             ]
         }
     },
     "autoload": {
         "psr-4": {
-            "VanVu\\FileUploadDropZone\\": "src/"
+            "VanVu\\FileUploadDropZone\\": "src"
         }
     }
 }
